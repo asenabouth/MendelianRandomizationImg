@@ -33,13 +33,13 @@ RUN R -e "install.packages(c('remotes', 'devtools', 'data.table', 'tidyverse'), 
 RUN R -e "install.packages('TwoSampleMR', repos = c('https://mrcieu.r-universe.dev', 'https://cloud.r-project.org'))"
 
 # Install PLINK 1.9
-RUN wget https://s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20231211.zip && \
+RUN wget --tries=3 --timeout=30 https://s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20231211.zip && \
     unzip plink_linux_x86_64_20231211.zip -d /usr/local/bin/ && \
     rm plink_linux_x86_64_20231211.zip && \
     chmod +x /usr/local/bin/plink
 
 # Install SMR (Summary-data-based Mendelian Randomization)
-RUN wget https://yanglab.westlake.edu.cn/software/smr/download/smr_linux_x86_64.zip && \
+RUN wget --tries=3 --timeout=30 https://yanglab.westlake.edu.cn/software/smr/download/smr_linux_x86_64.zip && \
     unzip smr_linux_x86_64.zip && \
     mv smr_linux_x86_64/smr /usr/local/bin/ && \
     chmod +x /usr/local/bin/smr && \
