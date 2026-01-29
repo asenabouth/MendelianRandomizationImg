@@ -45,6 +45,13 @@ RUN wget --tries=3 --timeout=30 https://yanglab.westlake.edu.cn/software/smr/dow
     chmod +x /usr/local/bin/smr && \
     rm -rf smr_linux_x86_64.zip smr_linux_x86_64
 
+# Install GCTA (Genome-wide Complex Trait Analysis)
+RUN wget --tries=3 --timeout=30 https://yanglab.westlake.edu.cn/software/gcta/bin/gcta-1.94.1-linux-kernel-3-x86_64.zip && \
+    unzip gcta-1.94.1-linux-kernel-3-x86_64.zip && \
+    mv gcta-1.94.1-linux-kernel-3-x86_64/gcta-1.94.1 /usr/local/bin/gcta64 && \
+    chmod +x /usr/local/bin/gcta64 && \
+    rm -rf gcta-1.94.1-linux-kernel-3-x86_64.zip gcta-1.94.1-linux-kernel-3-x86_64
+
 # Create a non-root user for running analysis work
 RUN useradd -m -s /bin/bash mruser && \
     mkdir -p /workspace && \
