@@ -26,8 +26,10 @@ RUN dnf -y update && \
     && dnf clean all && \
     rm -rf /var/cache/dnf
 
+
 # Install common R packages for Mendelian Randomization
-RUN R -e "install.packages(c('remotes', 'devtools'), repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages(c('remotes', 'devtools', 'data.table', 'tidyverse'), repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages('TwoSampleMR', repos = c('https://mrcieu.r-universe.dev', 'https://cloud.r-project.org'))"
 
 # Create a non-root user for running analysis work
 RUN useradd -m -s /bin/bash mruser && \
