@@ -29,7 +29,7 @@ RUN dnf -y update && \
 
 
 # Install common R packages for Mendelian Randomization
-RUN R -e "install.packages(c('remotes', 'devtools', 'data.table', 'tidyverse'), repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages(c('remotes', 'devtools', 'data.table', 'tidyverse', 'arrow'), repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('TwoSampleMR', repos = c('https://mrcieu.r-universe.dev', 'https://cloud.r-project.org'))"
 RUN R -e "install.packages('BiocManager', repos='https://cloud.r-project.org')"
 RUN R -e "BiocManager::install()"
