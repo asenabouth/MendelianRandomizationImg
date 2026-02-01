@@ -1,7 +1,7 @@
 # Dockerfile for Mendelian Randomization Analysis
 # Using Rocky Linux as the base image from Docker Hub
 
-FROM rockylinux/rockylinux:9
+FROM --platform=linux/amd64 rockylinux/rockylinux:9
 
 # Set metadata
 LABEL maintainer="MendelianRandomizationImg"
@@ -31,6 +31,9 @@ RUN dnf -y update && \
 # Install common R packages for Mendelian Randomization
 RUN R -e "install.packages(c('remotes', 'devtools', 'data.table', 'tidyverse'), repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('TwoSampleMR', repos = c('https://mrcieu.r-universe.dev', 'https://cloud.r-project.org'))"
+RUN R -e "install.packages('BiocManager', repos='https://cloud.r-project.org')"
+RUN R -e "BiocManager::install()"
+RUN R -e "BiocManager::install(c('MendelianRandomization', 'GenomicRanges', 'IRanges', 'liftOver', 'S4Vectors'))"
 
 # Install PLINK 1.9
 RUN wget --tries=3 --timeout=30 https://s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20231211.zip && \
@@ -55,7 +58,8 @@ RUN wget --tries=3 --timeout=30 https://yanglab.westlake.edu.cn/software/gcta/bi
 # Create a non-root user for running analysis work
 RUN useradd -m -s /bin/bash mruser && \
     mkdir -p /workspace && \
-    chown -R mruser:mruser /workspace
+    mkdir -p /data && \
+    chown -R mruser:mruser /workspace /data
 
 # Set working directory
 WORKDIR /workspace
