@@ -31,11 +31,11 @@ RUN dnf -y update && \
 
 
 # Install common R packages for Mendelian Randomization
-RUN R -e "install.packages(c('remotes', 'devtools', 'data.table', 'tidyverse', 'arrow'), repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages(c('remotes', 'devtools', 'data.table', 'tidyverse', 'arrow', 'MendelianRandomization'), repos='https://cloud.r-project.org/')"
 RUN R -e "install.packages('TwoSampleMR', repos = c('https://mrcieu.r-universe.dev', 'https://cloud.r-project.org'))"
 RUN R -e "install.packages('BiocManager', repos='https://cloud.r-project.org')"
 RUN R -e "BiocManager::install()"
-RUN R -e "BiocManager::install(c('MendelianRandomization', 'GenomicRanges', 'IRanges', 'liftOver', 'S4Vectors'))"
+RUN R -e "BiocManager::install(c('GenomicRanges', 'IRanges', 'liftOver', 'S4Vectors'))"
 
 # Install PLINK 1.9
 RUN wget --tries=3 --timeout=30 https://s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20231211.zip && \
