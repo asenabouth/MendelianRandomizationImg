@@ -25,3 +25,7 @@ Bioconductor:
 - IRanges
 - liftOver
 - S4Vectors
+
+# Bind paths
+- /workspace
+- /data

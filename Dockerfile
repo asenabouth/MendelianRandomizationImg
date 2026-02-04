@@ -27,17 +27,19 @@ RUN dnf -y update && \
     which \
     unzip \
     openblas-devel \
+    gmp-devel \
+    mpfr-devel \
     && dnf clean all && \
     rm -rf /var/cache/dnf
 
 
 # Install common R packages for Mendelian Randomization
-RUN R -e "install.packages(c('remotes', 'devtools', 'data.table', 'tidyverse', 'arrow'), repos='https://cran.csiro.au/')"
-RUN R -e "install.packages(c('TwoSampleMR'), repos = c('https://mrcieu.r-universe.dev', 'https://cran.csiro.au/'))"
-RUN R -e "install.packages('BiocManager', repos='https://cran.csiro.au/')"
-RUN R -e "BiocManager::install()"
-RUN R -e "BiocManager::install(c('GenomicRanges', 'IRanges', 'liftOver', 'S4Vectors'))"
-RUN R -e "install.packages('MendelianRandomization', repos='https://cran.csiro.au/')"
+RUN R -e "install.packages(c('remotes', 'devtools', 'data.table', 'tidyverse', 'arrow'), repos='https://cran.csiro.au/', dependencies=TRUE)" && \
+    R -e "install.packages(c('TwoSampleMR'), repos = c('https://mrcieu.r-universe.dev', 'https://cran.csiro.au/'), dependencies=TRUE)" && \
+    R -e "install.packages('BiocManager', repos='https://cran.csiro.au/')" && \
+    R -e "BiocManager::install()" && \
+    R -e "BiocManager::install(c('GenomicRanges', 'IRanges', 'liftOver', 'S4Vectors'))" && \
+    R -e "install.packages('MendelianRandomization', repos='https://cran.csiro.au/', dependencies=TRUE)"
 
 # Install PLINK 1.9
 RUN wget --tries=3 --timeout=30 https://s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20231211.zip && \
