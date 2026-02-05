@@ -35,7 +35,7 @@ RUN dnf -y update && \
 
 # Install common R packages for Mendelian Randomization
 RUN R -e "install.packages(c('remotes', 'devtools', 'data.table', 'tidyverse', 'arrow'), repos='https://cran.csiro.au/', dependencies=TRUE)" && \
-    R -e "install.packages(c('TwoSampleMR'), repos = c('https://mrcieu.r-universe.dev', 'https://cran.csiro.au/'), dependencies=TRUE)" && \
+    R -e "install.packages(c('TwoSampleMR', 'genetics.binaRies'), repos = c('https://mrcieu.r-universe.dev', 'https://cran.csiro.au/'), dependencies=TRUE)" && \
     R -e "install.packages('BiocManager', repos='https://cran.csiro.au/')" && \
     R -e "BiocManager::install()" && \
     R -e "BiocManager::install(c('GenomicRanges', 'IRanges', 'liftOver', 'S4Vectors'))" && \
