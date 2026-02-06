@@ -67,7 +67,8 @@ RUN wget --tries=3 --timeout=30 https://yanglab.westlake.edu.cn/software/gcta/bi
 RUN useradd -m -s /bin/bash mruser && \
     mkdir -p /workspace && \
     mkdir -p /data && \
-    chown -R mruser:mruser /workspace /data
+    mkdir -p /genotypes && \
+    chown -R mruser:mruser /workspace /data /genotypes
 
 # Set working directory
 WORKDIR /workspace
